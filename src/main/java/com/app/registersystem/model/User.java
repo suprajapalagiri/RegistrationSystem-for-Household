@@ -1,6 +1,7 @@
 package com.app.registersystem.model;
 
-import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,11 +10,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
-@Table(name = "Register_Record")
-//@Data
+@Table(name = "registration")
+@Data
+@Builder
+@AllArgsConstructor
 //@Setter
 public class User {
 	@Id
@@ -28,75 +33,20 @@ public class User {
 	private String address;
 	@Column(name = "apartment_number")
 	private String apartmentNum;
+	@Column(name = "in_date")
+	private LocalDate inDate;
+
 	@Column(name = "in_time")
-	private Instant inTime;
+	private LocalTime inTime;
+
+	@Column(name = "out_date")
+	private LocalDate outDate;
+
 	@Column(name = "out_time")
-	private Instant outTime;
+	private LocalTime outTime;
 
 	public User() {
 		super();
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getPhoneNum() {
-		return phoneNum;
-	}
-
-	public void setPhoneNum(String phoneNum) {
-		this.phoneNum = phoneNum;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getApartmentNum() {
-		return apartmentNum;
-	}
-
-	public void setApartmentNum(String apartmentNum) {
-		this.apartmentNum = apartmentNum;
-	}
-
-	public Instant getInTime() {
-		return inTime;
-	}
-
-	public void setInTime(Instant inTime) {
-		this.inTime = inTime;
-	}
-
-	public Instant getOutTime() {
-		return outTime;
-	}
-
-	public void setOutTime(Instant outTime) {
-		this.outTime = outTime;
-	}
-
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", userName=" + userName + ", phoneNum=" + phoneNum + ", address=" + address
-				+ ", apartmentNum=" + apartmentNum + ", inTime=" + inTime + ", outTime=" + outTime + "]";
 	}
 
 }
