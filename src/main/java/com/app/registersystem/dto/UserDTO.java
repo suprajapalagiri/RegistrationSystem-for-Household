@@ -1,4 +1,4 @@
-package com.app.registersystem.controller;
+package com.app.registersystem.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

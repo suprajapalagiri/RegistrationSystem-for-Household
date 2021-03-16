@@ -26,7 +26,6 @@ public class User {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long userId;
-
 	@Column(name = "name")
 	private String userName;
 	@Column(name = "phone_number")

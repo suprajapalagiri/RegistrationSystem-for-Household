@@ -1,12 +1,12 @@
-package com.app.registersystem;
+package com.app.registersystem.transformer;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
-import com.app.registersystem.controller.UserDTO;
+import com.app.registersystem.dto.UserDTO;
+import com.app.registersystem.exception.DataNotFoundException;
 import com.app.registersystem.model.User;
-import com.app.registersystem.validation.DataNotFoundException;
 
 public class UserTransformer {
 
