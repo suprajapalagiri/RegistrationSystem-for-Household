@@ -45,6 +45,9 @@ public class User {
 
 	@Column(name = "out_time")
 	private LocalTime outTime;
+	
+	@Column(name="status")
+	private String status;
 
 	public User() {
 		super();

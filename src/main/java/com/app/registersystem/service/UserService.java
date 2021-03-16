@@ -1,6 +1,5 @@
 package com.app.registersystem.service;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -12,6 +11,6 @@ import com.app.registersystem.model.User;
 public interface UserService {
 public User saveUser(User user);
 public List<User> getByDate(LocalDate date);
-
+public User getByName(String name);
 
 }

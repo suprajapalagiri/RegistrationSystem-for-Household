@@ -28,5 +28,6 @@ public class UserDTO {
 	private LocalDate outDate;
 	@Column(name = "out_time")
 	private LocalTime outTime;
-
+ 
+	private String status;
 }

@@ -75,6 +75,20 @@ public class UserController {
 		return ResponseEntity.ok(byDate);
 
 	}
+	@ApiOperation(value = "To get the Person details based on Name" )
+	@ApiResponses(value = {
+			@ApiResponse(code = 200,message = "pesron retrieved successfully based on name"),
+			@ApiResponse(code = 400, message = "bad request occured due to some url request..Please check once")
+	})
+	
+	
+	@GetMapping("/getByName/{name}")
+	public ResponseEntity<?> getBynamee(@PathVariable String name) throws ParseException {
+
+	User persons = userService.getByName(name);
+		return ResponseEntity.ok(persons);
+
+	}
 	
 	// Exception Handlers
 
@@ -85,14 +99,6 @@ public class UserController {
 			return handle(dataValidationException, HttpStatus.BAD_REQUEST, getRequestUri(httpRequest));
 		}
 
-		/*
-		 * @ExceptionHandler(DataValidationEaxception.class) public
-		 * ResponseEntity<ErrorDto> dataFormattingExceptionHandler(WebRequest
-		 * httpRequest, DataValidationEaxception dataFormattingException) {
-		 * 
-		 * return handle(dataFormattingException, HttpStatus.BAD_REQUEST,
-		 * getRequestUri(httpRequest)); }
-		 */
 		@ExceptionHandler(DataNotFoundException.class)
 		public ResponseEntity<ErrorDto> dataNotFoundExceptionHandler(WebRequest httpRequest,
 				DataNotFoundException dataNotFoundException) {

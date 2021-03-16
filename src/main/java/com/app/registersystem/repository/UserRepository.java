@@ -15,5 +15,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query(value = "select * from registration  where in_date=?1", nativeQuery = true)
 
 	public List<User> findByinDate(LocalDate date);
+	
+	@Query(value="select * from registration where name=?1", nativeQuery = true)
+	public User findByuserName(String name);
 
 }

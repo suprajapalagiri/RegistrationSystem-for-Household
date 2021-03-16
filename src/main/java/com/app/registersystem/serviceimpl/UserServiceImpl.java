@@ -28,4 +28,9 @@ public class UserServiceImpl implements UserService {
 		return userRepo.findByinDate(date);
 	}
 
+	@Override
+	public User getByName(String name) {
+		return userRepo.findByuserName(name);
+	}
+
 }

@@ -17,7 +17,7 @@ public class UserTransformer {
 
 		return User.builder().address(dto.getAddress()).apartmentNum(dto.getApartmentNumber()).inDate(LocalDate.now())
 				.inTime(LocalTime.now()).outDate(dto.getOutDate()).outTime(dto.getOutTime()).phoneNum(dto.getPhoneNum())
-				.userId(dto.getUserId()).userName(dto.getUserName()).build();
+				.userId(dto.getUserId()).userName(dto.getUserName()).status(dto.getStatus()).build();
 
 	}
 
@@ -28,7 +28,7 @@ public class UserTransformer {
 
 		return UserDTO.builder().address(user.getAddress()).apartmentNumber(user.getApartmentNum())
 				.inDate(LocalDate.now()).inTime(LocalTime.now()).outDate(user.getOutDate()).outTime(user.getOutTime())
-				.phoneNum(user.getPhoneNum()).userId(user.getUserId()).userName(user.getUserName()).build();
+				.phoneNum(user.getPhoneNum()).userId(user.getUserId()).userName(user.getUserName()).status(user.getStatus()).build();
 
 	}
 
