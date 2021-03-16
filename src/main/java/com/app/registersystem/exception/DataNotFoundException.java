@@ -1,4 +1,4 @@
-package com.app.registersystem.validation;
+package com.app.registersystem.exception;
 
 public class DataNotFoundException extends RuntimeException {
 
