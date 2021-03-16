@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 
-@Api(value="User controller",description = "Rest Api related to User entity!!")
+@Api(value = "User controller", description = "Rest Api related to User entity!!")
 @RestController
 @RequestMapping("/user")
 @Slf4j
@@ -42,13 +42,9 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	
-	
-	@ApiOperation(value="adding person into records")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200,message = "person added successfully by user"),
-			@ApiResponse(code = 400, message = "bad request occured due to some url request..Please check once")
-	})
+	@ApiOperation(value = "adding person into records")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "person added successfully by user"),
+			@ApiResponse(code = 400, message = "bad request occured due to some url request..Please check once") })
 	@PostMapping("/createUser")
 	public ResponseEntity<?> saveUser(@RequestBody UserDTO userDTO) throws URISyntaxException {
 		DtoValidationUtils.validateUser(userDTO);
@@ -59,80 +55,75 @@ public class UserController {
 		return ResponseEntity.created(new URI("user/createUser")).body(UserTransformer.fromEntityToDTO(saveUser));
 	}
 
-	@ApiOperation(value = "view a list of persons based on date" )
-	@ApiResponses(value = {
-			@ApiResponse(code = 200,message = "pesrons list retrieved successfully based on date"),
-			@ApiResponse(code = 400, message = "bad request occured due to some url request..Please check once")
-	})
-	
-	
+	@ApiOperation(value = "view a list of persons based on date")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "pesrons list retrieved successfully based on date"),
+			@ApiResponse(code = 400, message = "bad request occured due to some url request..Please check once") })
+
 	@GetMapping("/getByDate/{date}")
 	public ResponseEntity<?> getByDate(@PathVariable String date) throws ParseException {
 
 		LocalDate parsedDate = LocalDate.parse(date);
 		List<User> byDate = userService.getByDate(parsedDate);
-		//return new ResponseEntity<List<User>>(byDate, HttpStatus.OK);
+		// return new ResponseEntity<List<User>>(byDate, HttpStatus.OK);
 		return ResponseEntity.ok(byDate);
 
 	}
-	@ApiOperation(value = "To get the Person details based on Name" )
-	@ApiResponses(value = {
-			@ApiResponse(code = 200,message = "pesron retrieved successfully based on name"),
-			@ApiResponse(code = 400, message = "bad request occured due to some url request..Please check once")
-	})
-	
-	
+
+	@ApiOperation(value = "To get the Person details based on Name")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "pesron retrieved successfully based on name"),
+			@ApiResponse(code = 400, message = "bad request occured due to some url request..Please check once") })
+
 	@GetMapping("/getByName/{name}")
 	public ResponseEntity<?> getBynamee(@PathVariable String name) throws ParseException {
 
-	User persons = userService.getByName(name);
+		User persons = userService.getByName(name);
 		return ResponseEntity.ok(persons);
 
 	}
-	
+
 	// Exception Handlers
 
-		@ExceptionHandler(DataValidationEaxception.class)
-		public ResponseEntity<ErrorDto> dataValidationExceptionHandler(WebRequest httpRequest,
-				DataValidationEaxception dataValidationException) {
+	@ExceptionHandler(DataValidationEaxception.class)
+	public ResponseEntity<ErrorDto> dataValidationExceptionHandler(WebRequest httpRequest,
+			DataValidationEaxception dataValidationException) {
 
-			return handle(dataValidationException, HttpStatus.BAD_REQUEST, getRequestUri(httpRequest));
-		}
+		return handle(dataValidationException, HttpStatus.BAD_REQUEST, getRequestUri(httpRequest));
+	}
 
-		@ExceptionHandler(DataNotFoundException.class)
-		public ResponseEntity<ErrorDto> dataNotFoundExceptionHandler(WebRequest httpRequest,
-				DataNotFoundException dataNotFoundException) {
+	@ExceptionHandler(DataNotFoundException.class)
+	public ResponseEntity<ErrorDto> dataNotFoundExceptionHandler(WebRequest httpRequest,
+			DataNotFoundException dataNotFoundException) {
 
-			return handle(dataNotFoundException, HttpStatus.BAD_REQUEST, getRequestUri(httpRequest));
-
-		}
-
-		private String getRequestUri(WebRequest request) {
-			String uri = null;
-			if (request instanceof ServletWebRequest) {
-				uri = String.valueOf(((ServletWebRequest) request).getHttpMethod());
-				if (((ServletWebRequest) request).getRequest() != null) {
-					uri += " " + ((ServletWebRequest) request).getRequest().getRequestURI();
-				}
-			}
-			return uri;
-		}
-
-		@SuppressWarnings({ "unchecked", "rawtypes" })
-		protected ResponseEntity<ErrorDto> handle(Throwable t, HttpStatus httpStatus, String requestUri) {
-			String type = t.getClass().getSimpleName();
-			String description = t.getMessage() != null ? t.getMessage() : "Unknown error";
-			if (httpStatus.is5xxServerError())
-				log.error(String.format("Encountered unexpected error (code: %s, type: %s, message: %s, uri: %s)",
-						httpStatus, type, t.getMessage(), requestUri), t);
-			else if (httpStatus != HttpStatus.NOT_FOUND)
-				log.warn(String.format("Encountered unexpected error (code: %s, type: %s, message: %s, uri: %s)",
-						httpStatus, type, t.getMessage(), requestUri));
-			ErrorDto error = new ErrorDto();
-			error.setStatusCode(httpStatus.value());
-			error.setType(type);
-			error.setDescription(description);
-			return new ResponseEntity(error, httpStatus);
-		}
+		return handle(dataNotFoundException, HttpStatus.BAD_REQUEST, getRequestUri(httpRequest));
 
 	}
+
+	private String getRequestUri(WebRequest request) {
+		String uri = null;
+		if (request instanceof ServletWebRequest) {
+			uri = String.valueOf(((ServletWebRequest) request).getHttpMethod());
+			if (((ServletWebRequest) request).getRequest() != null) {
+				uri += " " + ((ServletWebRequest) request).getRequest().getRequestURI();
+			}
+		}
+		return uri;
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	protected ResponseEntity<ErrorDto> handle(Throwable t, HttpStatus httpStatus, String requestUri) {
+		String type = t.getClass().getSimpleName();
+		String description = t.getMessage() != null ? t.getMessage() : "Unknown error";
+		if (httpStatus.is5xxServerError())
+			log.error(String.format("Encountered unexpected error (code: %s, type: %s, message: %s, uri: %s)",
+					httpStatus, type, t.getMessage(), requestUri), t);
+		else if (httpStatus != HttpStatus.NOT_FOUND)
+			log.warn(String.format("Encountered unexpected error (code: %s, type: %s, message: %s, uri: %s)",
+					httpStatus, type, t.getMessage(), requestUri));
+		ErrorDto error = new ErrorDto();
+		error.setStatusCode(httpStatus.value());
+		error.setType(type);
+		error.setDescription(description);
+		return new ResponseEntity(error, httpStatus);
+	}
+
+}

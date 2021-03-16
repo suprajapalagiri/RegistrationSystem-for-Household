@@ -2,6 +2,7 @@ package com.app.registersystem.serviceimpl;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User saveUser(User user) {
+		User byName = getByName(user.getUserName());
+		if (Objects.isNull(byName)) {
+			user.setStatus("entering");
+		}
+		else {
+			user.setStatus("Leaving");
+		}
 		User save = userRepo.save(user);
 		return save;
 	}
