@@ -2,9 +2,7 @@ package com.app.registersystem.serviceimpl;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,18 +21,15 @@ public class UserServiceImpl implements UserService {
 	public User saveUser(User user) {
 		User save = null;
 		List<User> byName = getByName(user.getUserName());
-System.out.println("byName###"+byName);
 		if (byName.isEmpty()) {
 			user.setInTime(LocalTime.now());
 			user.setInDate(LocalDate.now());
 			save = userRepo.save(user);
 		} else {
-			for (User user2 : byName) {
-
+			User user2 = byName.get(byName.size()-1);
 				if (user.isEnteringStatus() && !user.isLeavingStatus()) {
 					user.setInTime(LocalTime.now());
 					user.setInDate(LocalDate.now());
-					// user.setStatus("entering");
 					save = userRepo.save(user);
 				}
 				if (user.isEnteringStatus() && user.isLeavingStatus()) {
@@ -46,7 +41,7 @@ System.out.println("byName###"+byName);
 					user.setOutTime(LocalTime.now());
 					save = userRepo.save(user);
 				}
-			}
+			
 		}
 		return save;
 	}
