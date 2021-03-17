@@ -46,8 +46,11 @@ public class User {
 	@Column(name = "out_time")
 	private LocalTime outTime;
 	
-	@Column(name="status")
-	private String status;
+	@Column(name="entering_status")
+	private boolean enteringStatus;
+	
+	@Column(name="leaving_status")
+	private boolean leavingStatus;
 
 	public User() {
 		super();

@@ -29,5 +29,6 @@ public class UserDTO {
 	@Column(name = "out_time")
 	private LocalTime outTime;
  
-	private String status;
+	private boolean enteringStatus;
+	private boolean leavingStatus;
 }

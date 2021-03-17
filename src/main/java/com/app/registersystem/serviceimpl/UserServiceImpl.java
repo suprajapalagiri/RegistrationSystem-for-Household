@@ -1,6 +1,8 @@
 package com.app.registersystem.serviceimpl;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,14 +21,24 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User saveUser(User user) {
+		User save = null;
 		User byName = getByName(user.getUserName());
-		if (Objects.isNull(byName)) {
-			user.setStatus("entering");
+		if (user.isEnteringStatus() && !user.isLeavingStatus()) {
+			user.setInTime(LocalTime.now());
+			user.setInDate(LocalDate.now());
+			// user.setStatus("entering");
+			save = userRepo.save(user);
 		}
-		else {
-			user.setStatus("Leaving");
+		if (user.isEnteringStatus() && user.isLeavingStatus()) {
+			System.out.println("user id::" + byName.getUserId());
+			user.setUserId(byName.getUserId());
+			user.setInDate(byName.getInDate());
+			user.setInTime(byName.getInTime());
+			user.setOutDate(LocalDate.now());
+			user.setOutTime(LocalTime.now());
+			save = userRepo.save(user);
 		}
-		User save = userRepo.save(user);
+
 		return save;
 	}
 
