@@ -76,7 +76,8 @@ public class UserController {
 	@GetMapping("/getByName/{name}")
 	public ResponseEntity<?> getBynamee(@PathVariable String name) throws ParseException {
 
-		User persons = userService.getByName(name);
+		List<User> persons = userService.getByName(name);
+		
 		return ResponseEntity.ok(persons);
 
 	}

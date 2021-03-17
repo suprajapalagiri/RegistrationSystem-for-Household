@@ -15,9 +15,9 @@ public class UserTransformer {
 			throw new DataNotFoundException("user data not found");
 		}
 
-		return User.builder().address(dto.getAddress()).apartmentNum(dto.getApartmentNumber()).inDate(LocalDate.now())
-				.inTime(LocalTime.now()).outDate(dto.getOutDate()).outTime(dto.getOutTime()).phoneNum(dto.getPhoneNum())
-				.userId(dto.getUserId()).userName(dto.getUserName()).status(dto.getStatus()).build();
+		return User.builder().address(dto.getAddress()).apartmentNum(dto.getApartmentNumber()).inDate(dto.getInDate())
+				.inTime(dto.getInTime()).outDate(dto.getOutDate()).outTime(dto.getOutTime()).phoneNum(dto.getPhoneNum())
+				.userId(dto.getUserId()).userName(dto.getUserName()).enteringStatus(dto.isEnteringStatus()).leavingStatus(dto.isLeavingStatus()).build();
 
 	}
 
@@ -27,8 +27,8 @@ public class UserTransformer {
 		}
 
 		return UserDTO.builder().address(user.getAddress()).apartmentNumber(user.getApartmentNum())
-				.inDate(LocalDate.now()).inTime(LocalTime.now()).outDate(user.getOutDate()).outTime(user.getOutTime())
-				.phoneNum(user.getPhoneNum()).userId(user.getUserId()).userName(user.getUserName()).status(user.getStatus()).build();
+				.inDate(user.getInDate()).inTime(user.getInTime()).outDate(user.getOutDate()).outTime(user.getOutTime())
+				.phoneNum(user.getPhoneNum()).userId(user.getUserId()).userName(user.getUserName()).enteringStatus(user.isEnteringStatus()).leavingStatus(user.isLeavingStatus()).build();
 
 	}
 
