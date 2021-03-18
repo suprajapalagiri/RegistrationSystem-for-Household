@@ -27,6 +27,7 @@ import com.app.registersystem.model.User;
 import com.app.registersystem.service.UserService;
 import com.app.registersystem.transformer.UserTransformer;
 import com.app.registersystem.validation.DtoValidationUtils;
+import com.app.registersystem.validation.DtoValidationUtils.OPTINALITY;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,8 +40,13 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/user")
 @Slf4j
 public class UserController {
+
 	@Autowired
 	private UserService userService;
+
+	public UserController(UserService userService) {
+		this.userService = userService;
+	}
 
 	@ApiOperation(value = "adding person into records")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "person added successfully by user"),
@@ -60,11 +66,11 @@ public class UserController {
 			@ApiResponse(code = 400, message = "bad request occured due to some url request..Please check once") })
 
 	@GetMapping("/getByDate/{date}")
-	public ResponseEntity<?> getByDate(@PathVariable String date) throws ParseException {
+	public ResponseEntity<?> getByDate(@PathVariable String date)  {
+		DtoValidationUtils.validateRequired(date,OPTINALITY.REQUIRED);
 
 		LocalDate parsedDate = LocalDate.parse(date);
 		List<User> byDate = userService.getByDate(parsedDate);
-		// return new ResponseEntity<List<User>>(byDate, HttpStatus.OK);
 		return ResponseEntity.ok(byDate);
 
 	}
@@ -74,11 +80,11 @@ public class UserController {
 			@ApiResponse(code = 400, message = "bad request occured due to some url request..Please check once") })
 
 	@GetMapping("/getByName/{name}")
-	public ResponseEntity<?> getBynamee(@PathVariable String name) throws ParseException {
-
+	public ResponseEntity<?> getBynamee(@PathVariable String name)  {
+		DtoValidationUtils.validateRequired(name,OPTINALITY.REQUIRED);
 		List<User> persons = userService.getByName(name);
-		
-		return ResponseEntity.ok(persons);
+
+		return ResponseEntity.ok(persons); 
 
 	}
 
@@ -95,7 +101,7 @@ public class UserController {
 	public ResponseEntity<ErrorDto> dataNotFoundExceptionHandler(WebRequest httpRequest,
 			DataNotFoundException dataNotFoundException) {
 
-		return handle(dataNotFoundException, HttpStatus.BAD_REQUEST, getRequestUri(httpRequest));
+		return handle(dataNotFoundException, HttpStatus.NOT_FOUND, getRequestUri(httpRequest));
 
 	}
 

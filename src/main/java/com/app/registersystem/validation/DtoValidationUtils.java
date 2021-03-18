@@ -14,7 +14,7 @@ public class DtoValidationUtils {
 
 	public static void validateUser(UserDTO dto) {
 		if (Objects.isNull(dto)) {
-
+ 
 			throw new DataNotFoundException("no data to process");
 
 		}
