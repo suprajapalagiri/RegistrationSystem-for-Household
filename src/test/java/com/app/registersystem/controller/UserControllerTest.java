@@ -4,20 +4,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-import java.text.ParseException;
+import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.app.registersystem.dto.UserDTO;
 import com.app.registersystem.exception.DataValidationEaxception;
 import com.app.registersystem.model.User;
 import com.app.registersystem.service.UserService;
@@ -37,6 +37,10 @@ public class UserControllerTest {
 		controller = new UserController(service);
 	}
 
+	public UserDTO getUser() {
+		return new UserDTO(1l, "nagarani", "2165465", "sghd", "54", date, null, null, null, true, false);
+	}
+
 	public List<User> getUsers() {
 		User user = new User(1l, "nagarani", "2165465", "sghd", "54", date, null, null, null, true, false);
 		List<User> listUsers = new ArrayList<>();
@@ -46,7 +50,14 @@ public class UserControllerTest {
 
 	@Test
 	public void testSaveUser() {
+		try {
+			when(service.saveUser(getUsers().get(0))).thenReturn(getUsers().get(0));
+			ResponseEntity<?> saveUser = controller.saveUser(getUser());
+			assertEquals(getUser(), saveUser.getBody());
 
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test
@@ -63,7 +74,7 @@ public class UserControllerTest {
 	public void testGetByDateNullCondition() {
 		assertThrows(DataValidationEaxception.class, () -> controller.getByDate(null));
 	}
-	
+
 	@Test
 	public void testGetByDateEmptyCondition() {
 		assertThrows(DataValidationEaxception.class, () -> controller.getByDate(""));
