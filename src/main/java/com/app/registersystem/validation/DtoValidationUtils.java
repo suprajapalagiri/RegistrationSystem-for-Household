@@ -14,27 +14,27 @@ public class DtoValidationUtils {
 
 	public static void validateUser(UserDTO dto) {
 		if (Objects.isNull(dto)) {
- 
+
 			throw new DataNotFoundException("no data to process");
 
 		}
 		validateRequired(dto.getUserName(), OPTINALITY.REQUIRED);
 		validateRequired(dto.getApartmentNumber(), OPTINALITY.REQUIRED);
-		validateRequired(dto.getAddress(),OPTINALITY.REQUIRED);
+		validateRequired(dto.getAddress(), OPTINALITY.REQUIRED);
 	}
 
 	public static void validateRequired(Object field, OPTINALITY optionality) {
 		if (optionality == OPTINALITY.REQUIRED) {
-
-			if (field == null) {
+			System.out.println(field);
+			if (field == null ) {
+				System.out.println("inside if ::" + field);
 				throw new DataValidationEaxception("field should not be null!!");
 			}
-			if (field instanceof String && String.valueOf( field).isEmpty()) {
+			if (field instanceof String && String.valueOf(field).isEmpty()) {
 				throw new DataValidationEaxception("field should not be empty!!");
 			}
 		}
 
 	}
-	
-	
+
 }

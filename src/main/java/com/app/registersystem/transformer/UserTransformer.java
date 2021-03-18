@@ -1,7 +1,5 @@
 package com.app.registersystem.transformer;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Objects;
 
 import com.app.registersystem.dto.UserDTO;
@@ -9,7 +7,7 @@ import com.app.registersystem.exception.DataNotFoundException;
 import com.app.registersystem.model.User;
 
 public class UserTransformer {
-
+ 
 	public static User fromDtoToEntity(UserDTO dto) {
 		if (Objects.isNull(dto)) {
 			throw new DataNotFoundException("user data not found");
