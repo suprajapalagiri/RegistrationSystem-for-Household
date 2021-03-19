@@ -25,9 +25,7 @@ public class DtoValidationUtils {
 
 	public static void validateRequired(Object field, OPTINALITY optionality) {
 		if (optionality == OPTINALITY.REQUIRED) {
-			System.out.println(field);
 			if (field == null ) {
-				System.out.println("inside if ::" + field);
 				throw new DataValidationEaxception("field should not be null!!");
 			}
 			if (field instanceof String && String.valueOf(field).isEmpty()) {
